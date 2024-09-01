@@ -94,7 +94,7 @@ fun unitConvertor(modifier: Modifier = Modifier) {
     fun convertUnits() {
         val inputValueDouble = inputValue.value.toDoubleOrNull() ?: 0.0
         // ?: - Elvis operator (if NULL, then 0.0)
-        val result = (inputValueDouble * conversionFactor.value * 100 / oConversionFactor.value).roundToInt()
+        val result = (inputValueDouble * conversionFactor.value / oConversionFactor.value).roundToInt()
         outputValue.value = result.toString()
     }
 
