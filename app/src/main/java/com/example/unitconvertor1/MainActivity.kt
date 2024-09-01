@@ -55,9 +55,9 @@ class MainActivity : ComponentActivity() {
 //                        name = "Android",
 //                        modifier = Modifier.padding(innerPadding)
 //                    )
-                      unitConvertor(
-                          modifier = Modifier.padding(innerPadding)
-                      )
+                    unitConvertor(
+                        modifier = Modifier.padding(innerPadding)
+                    )
                 }
             }
         }
@@ -75,12 +75,12 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun unitConvertor(modifier: Modifier = Modifier) {
 
-    var inputValue by remember { mutableStateOf("") }
-    var outputValue by remember { mutableStateOf("")}
-    var inputUnit by remember { mutableStateOf("Meters") }
-    var outputUnit by remember { mutableStateOf("Meters")}
-    var iExpanded by remember { mutableStateOf(false) }
-    var oExpanded by remember { mutableStateOf(false) }
+    var inputValue = remember { mutableStateOf("") }
+    var outputValue = remember { mutableStateOf("")}
+    var inputUnit = remember { mutableStateOf("Meters") }
+    var outputUnit = remember { mutableStateOf("Meters")}
+    var iExpanded = remember { mutableStateOf(false) }
+    var oExpanded = remember { mutableStateOf(false) }
     val conversionFactor = remember { mutableStateOf(1.00) }
     val oConversionFactor = remember { mutableStateOf(1.00)}
 
@@ -92,112 +92,112 @@ fun unitConvertor(modifier: Modifier = Modifier) {
     )
 
     fun convertUnits() {
-        val inputValueDouble = inputValue.toDoubleOrNull() ?: 0.0
+        val inputValueDouble = inputValue.value.toDoubleOrNull() ?: 0.0
         // ?: - Elvis operator (if NULL, then 0.0)
         val result = (inputValueDouble * conversionFactor.value * 100 / oConversionFactor.value).roundToInt()
-        outputValue = result.toString()
+        outputValue.value = result.toString()
     }
 
-   Column (
-       modifier = Modifier.fillMaxSize(),
-       verticalArrangement = Arrangement.Center,
-       horizontalAlignment = Alignment.CenterHorizontally
-   ) {
-       Text("Unit Convertor"/*, modifier = Modifier.padding(100.dp)*/,
-           style = /*customTextStyle */ MaterialTheme.typography.headlineLarge
-       )
-       Spacer(modifier = Modifier.height(16.dp))
-       OutlinedTextField(value = inputValue, onValueChange = { it->
-           inputValue = it
-           convertUnits()
-       },
-           label = {Text("Enter value")})
-       Spacer(modifier = Modifier.height(16.dp))
-       Row {
+    Column (
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text("Unit Convertor"/*, modifier = Modifier.padding(100.dp)*/,
+            style = /*customTextStyle */ MaterialTheme.typography.headlineLarge
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        OutlinedTextField(value = inputValue.value, onValueChange = { it->
+            inputValue.value = it
+            convertUnits()
+        },
+            label = {Text("Enter value")})
+        Spacer(modifier = Modifier.height(16.dp))
+        Row {
 //           val context = LocalContext.current
 //           Button(onClick = { Toast.makeText(context,
-           //           "You have clicked the button",
-           //           Toast.LENGTH_LONG).show() }) {
+            //           "You have clicked the button",
+            //           Toast.LENGTH_LONG).show() }) {
 //               Text("My button")
 //           }
-           Box {
-               Button(onClick = { iExpanded = true }) {
-                   Text("inputUnit")
-                   androidx.compose.material3.Icon( imageVector = Icons.Default.ArrowDropDown,
-                       "Arrow Down")
-               }
-               DropdownMenu(expanded = iExpanded, onDismissRequest = { iExpanded = false }) {
-                   DropdownMenuItem(text = {Text("Centimeters")},
-                       onClick = {
-                           iExpanded = false
-                           inputUnit = 'Centimeters'
-                           conversionFactor.value = 0.01
-                           convertUnits()
-                       })
-                   DropdownMenuItem(text = {Text("Meters")},
-                       onClick = {
-                           iExpanded = false
-                           inputUnit = "Meters"
-                           conversionFactor.value = 1.0
-                           convertUnits()
-                       })
-                   DropdownMenuItem(text = {Text("Feet")},
-                       onClick = {
-                           iExpanded = false
-                           inputUnit = "Feet"
-                           conversionFactor.value = 0.3048
-                           convertUnits()
-                       })
-                   DropdownMenuItem(text = {Text("Millimeters")},
-                       onClick = {
-                           iExpanded = false
-                           inputUnit = "Millimeters"
-                           conversionFactor.value = 0.001
-                           convertUnits()
-                       })
-               }
-           }
-           Spacer(modifier = Modifier.width(16.dp))
-           Box {
-               Button(onClick = { oExpanded = true }) {
-                   Text("outputUnit")
-                   androidx.compose.material3.Icon( imageVector = Icons.Default.ArrowDropDown,
-                       "Arrow Down")
-               }
-               DropdownMenu(expanded = oExpanded, onDismissRequest = { oExpanded = false }) {
-                   DropdownMenuItem(text = {Text("Centimeters")},
-                       onClick = {  oExpanded = false
-                           outputUnit = "Centimeters"
-                           oConversionFactor.value = 0.01
-                           convertUnits()
-                       })
-                   DropdownMenuItem(text = {Text("Meters")},
-                       onClick = {  oExpanded = false
-                           outputUnit = "Meters"
-                           oConversionFactor.value = 1.00
-                           convertUnits()
-                       })
-                   DropdownMenuItem(text = {Text("Feet")},
-                       onClick = {  oExpanded = false
-                           outputUnit = "Feet"
-                           oConversionFactor.value = 0.3048
-                           convertUnits()
-                       })
-                   DropdownMenuItem(text = {Text("Millimeters")},
-                       onClick = {  oExpanded = false
-                           outputUnit = "Millimeters"
-                           oConversionFactor.value = 0.001
-                           convertUnits()
-                       })
-               }
+            Box {
+                Button(onClick = { iExpanded.value = true }) {
+                    Text("inputUnit")
+                    androidx.compose.material3.Icon( imageVector = Icons.Default.ArrowDropDown,
+                        "Arrow Down")
+                }
+                DropdownMenu(expanded = iExpanded.value, onDismissRequest = { iExpanded.value = false }) {
+                    DropdownMenuItem(text = {Text("Centimeters")},
+                        onClick = {
+                            iExpanded.value = false
+                            inputUnit.value = "Centimeters"
+                            conversionFactor.value = 0.01
+                            convertUnits()
+                        })
+                    DropdownMenuItem(text = {Text("Meters")},
+                        onClick = {
+                            iExpanded.value = false
+                            inputUnit.value = "Meters"
+                            conversionFactor.value = 1.0
+                            convertUnits()
+                        })
+                    DropdownMenuItem(text = {Text("Feet")},
+                        onClick = {
+                            iExpanded.value = false
+                            inputUnit.value = "Feet"
+                            conversionFactor.value = 0.3048
+                            convertUnits()
+                        })
+                    DropdownMenuItem(text = {Text("Millimeters")},
+                        onClick = {
+                            iExpanded.value = false
+                            inputUnit.value = "Millimeters"
+                            conversionFactor.value = 0.001
+                            convertUnits()
+                        })
+                }
+            }
+            Spacer(modifier = Modifier.width(16.dp))
+            Box {
+                Button(onClick = { oExpanded.value = true }) {
+                    Text("outputUnit")
+                    androidx.compose.material3.Icon( imageVector = Icons.Default.ArrowDropDown,
+                        "Arrow Down")
+                }
+                DropdownMenu(expanded = oExpanded.value, onDismissRequest = { oExpanded.value = false }) {
+                    DropdownMenuItem(text = {Text("Centimeters")},
+                        onClick = {  oExpanded.value = false
+                            outputUnit.value = "Centimeters"
+                            oConversionFactor.value = 0.01
+                            convertUnits()
+                        })
+                    DropdownMenuItem(text = {Text("Meters")},
+                        onClick = {  oExpanded.value = false
+                            outputUnit.value = "Meters"
+                            oConversionFactor.value = 1.00
+                            convertUnits()
+                        })
+                    DropdownMenuItem(text = {Text("Feet")},
+                        onClick = {  oExpanded.value = false
+                            outputUnit.value = "Feet"
+                            oConversionFactor.value = 0.3048
+                            convertUnits()
+                        })
+                    DropdownMenuItem(text = {Text("Millimeters")},
+                        onClick = {  oExpanded.value = false
+                            outputUnit.value = "Millimeters"
+                            oConversionFactor.value = 0.001
+                            convertUnits()
+                        })
+                }
 
-           }
-       }
-       Spacer(modifier = Modifier.height(16.dp))
-       Text("Result: $outputValue $outputUnit",
-           style = MaterialTheme.typography.headlineMedium
-       )
-   }
+            }
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+        Text("Result: $outputValue $outputUnit",
+            style = MaterialTheme.typography.headlineMedium
+        )
+    }
 
 
 }
