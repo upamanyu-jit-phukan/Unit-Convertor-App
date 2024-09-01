@@ -194,7 +194,7 @@ fun unitConvertor(modifier: Modifier = Modifier) {
             }
         }
         Spacer(modifier = Modifier.height(16.dp))
-        Text("Result: $outputValue $outputUnit",
+        Text("Result: $outputValue.value $outputUnit.value",
             style = MaterialTheme.typography.headlineMedium
         )
     }
